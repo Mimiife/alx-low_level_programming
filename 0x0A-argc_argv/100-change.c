@@ -1,57 +1,46 @@
 #include <stdio.h>
-#include <ctype.h>
 #include <stdlib.h>
-#include <string.h>
 /**
- * checker - checks for valid input
- * @argc: argument count
- * @i: counter for argv[]
- * @j: counter for argv[][]
- * @argv: argument vector
- * Return: 0 on success, 1 on failure
- */
-int checker(int argc, int i, unsigned int j, char *argv[])
-{
-	for (i = 1; i <= argc; i++)
-		for (j = 0; argv[i] != '\0' && j < strlen(argv[i]); j++)
-			if (isdigit(argv[i][j]) == 0)
-				return (1);
-	return (0);
-}
-/**
- * main - Prints the minimum number of coins
- * to make change for an amount of cents.
- * @argc: argument count
- * @argv: argument vector
- * Return: 0 on success
- */
+ * main - prints the minimum number of coins to make change for a given amount
+ * @argc: arguement count
+ * @argv: array of pointers to arguement strings
+ * Return: number of coins or 1
+ **/
 int main(int argc, char *argv[])
 {
-	unsigned int cents;
-	int coins;
+	int amount, coins;
 
-	cents = coins = 0;
-	if (argc == 2)
+	if (argc != 2)
 	{
-		if (argv[1][0] == '-')
-			printf("0\n");
-		if (checker(argc, 1, 0, argv) == 0)
-		{
-			cents = atoi(argv[1]);
-			for ( ; cents >= 25; coins++, cents -= 25)
-				;
-			for ( ; cents >= 10; coins++, cents -= 10)
-				;
-			for ( ; cents >= 5; coins++, cents -= 5)
-				;
-			for ( ; cents >= 2; coins++, cents -= 2)
-				;
-			for ( ; cents >= 1; coins++, cents--)
-				;
-			printf("%d\n", coins);
-		}
-	}
-	else
 		printf("Error\n");
+		return (1);
+	}
+	amount = atoi(argv[1]);
+	coins = 0;
+	if (amount > 25)
+	{
+		while (amount >= 25)
+			amount -= 25, coins++;
+	}
+	if (amount > 10 && amount < 25)
+	{
+		while (amount >= 10)
+			amount -= 10, coins++;
+	}
+	if (amount > 5 && amount < 10)
+	{
+		while (amount >= 5)
+			amount -= 5, coins++;
+	}
+	if (amount > 2 && amount < 5)
+	{
+		while (amount >= 2)
+			amount -= 2, coins++;
+	}
+	if (amount == 1 || amount == 2 || amount == 5 || amount == 10 || amount == 25)
+	{
+		coins++;
+	}
+	printf("%d\n", coins);
 	return (0);
 }
