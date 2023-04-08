@@ -12,7 +12,7 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *tap;
+	char *buffer;
 	ssize_t fd;
 	ssize_t w;
 	ssize_t t;
@@ -21,10 +21,10 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	if (fd == -1)
 		return (0);
 	tap = malloc(sizeof(char) * letters);
-	t = read(fd, tap, letters);
-	w = write(STDOUT_FILENO, buf, t);
+	t = read(fd, buffer, letters);
+	w = write(STDOUT_FILENO, buffer, t);
 
-	free(tap);
+	free(buffer);
 	close(fd);
 	return (w);
 }
